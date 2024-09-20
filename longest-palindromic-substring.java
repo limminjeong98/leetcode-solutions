@@ -10,10 +10,11 @@ class Solution {
     public String longestPalindrome(String s) {
     
         n = s.length();
-        left = -1;
-        maxLength = 0;
 
         if (n < 2) return s;
+
+        left = -1;
+        maxLength = 0;
 
         for (int i = 0; i < n - 1; i++) {
             extendPalindrome(s, i, i + 1); // 두칸짜리 투포인터

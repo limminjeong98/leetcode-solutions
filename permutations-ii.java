@@ -27,7 +27,9 @@ class Solution {
             
             newPrev = new ArrayList<>(prevElements);
             newNext = new ArrayList<>(nextElements);
-            
+
+            // prev.add(current);, prev.remove(current)하지 않고
+            // add하는 newPrev List도 새로 만들어줘야하는 이유: remove했을때 삭제되는 순서 보장
             newPrev.add(current);
             newNext.remove(current);
 

@@ -5,24 +5,22 @@ import java.util.*;
 class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);
-        Set<List<Integer>> answer = new HashSet<>();
-        List<Integer> next = Arrays.stream(nums).boxed().collect(Collectors.toList());
-        dfs(answer, new ArrayList<>(), next);
-        return answer.stream().collect(Collectors.toList());
+        List<List<Integer>> answer = new ArrayList<>();
+        dfs(answer, new ArrayList<>(), nums, 0, nums.length);
+        return answer;
     }
 
-    public void dfs(Set<List<Integer>> answer, List<Integer> current, List<Integer> next) {
-        Collections.sort(current);
-        if (answer.contains(current)) return; 
+    public void dfs(List<List<Integer>> answer, List<Integer> current, int[] nums, int position, int n) {
         answer.add(new ArrayList<>(current));
-        if (next.isEmpty()) return;
+        if (position == n) return;
 
-        for (Integer i : next) {
-            current.add(i);
-            List<Integer> newNext = new ArrayList<>(next);
-            newNext.remove(i);
-            dfs(answer, current, newNext);
-            current.remove(i);
+        for (int i = position; i < n; i++) {
+            Integer num = nums[i];
+            // 같은 위치에서 같은 값을 방문하지 않음
+            if (i > position && nums[i - 1] == nums[i]) continue;
+            current.add(num);
+            dfs(answer, current, nums, i + 1, n);
+            current.remove(num);
         }
     }
 }

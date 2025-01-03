@@ -3,30 +3,18 @@ import java.util.*;
 // https://leetcode.com/problems/subsets
 
 class Solution {
-
-    public static List<List<Integer>> answer;
-    public static int n;
-    public static List<Integer> arr;
-
     public List<List<Integer>> subsets(int[] nums) {
-        answer = new ArrayList<>();
-        n = nums.length;
-
-        arr = Arrays.stream(nums).boxed().collect(Collectors.toList());
-
-        dfs(new ArrayList<>(), 0);
+        List<List<Integer>> answer = new ArrayList<>();
+        dfs(answer, new LinkedList<>(), nums, 0, nums.length);
         return answer;
     }
 
-    public void dfs(List<Integer> subList, int index) {
-        if (index > n) return;
-
-        answer.add(new ArrayList<>(subList));
-
-        for (int i = index; i < n; i++) {
-            subList.add(arr.get(i));
-            dfs(subList, i + 1);
-            subList.removeLast();
+    public void dfs(List<List<Integer>> answer, List<Integer> subset, int[] nums, int idx, int n) {
+        answer.add(new ArrayList<>(subset));
+        for (int i = idx; i < n; i++) {
+            subset.add(nums[i]);
+            dfs(answer, subset, nums, i + 1, n);
+            subset.removeLast();
         }
     }
 }

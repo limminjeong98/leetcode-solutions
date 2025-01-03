@@ -6,13 +6,12 @@ class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> answer = new ArrayList<>();
-        dfs(answer, new ArrayList<>(), nums, 0, nums.length);
+        dfs(answer, new LinkedList<>(), nums, 0, nums.length);
         return answer;
     }
 
     public void dfs(List<List<Integer>> answer, List<Integer> current, int[] nums, int position, int n) {
         answer.add(new ArrayList<>(current));
-        if (position == n) return;
 
         for (int i = position; i < n; i++) {
             Integer num = nums[i];
@@ -20,7 +19,7 @@ class Solution {
             if (i > position && nums[i - 1] == nums[i]) continue;
             current.add(num);
             dfs(answer, current, nums, i + 1, n);
-            current.remove(num);
+            current.removeLast();
         }
     }
 }
